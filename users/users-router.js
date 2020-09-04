@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.post("/register", async (req, res, next) => {
     try {
-        const {username, password} = req.body
+        const {username, password, department} = req.body
         const user = await Users.findBy({username}).first()
 
         if(user) {
@@ -19,8 +19,8 @@ router.post("/register", async (req, res, next) => {
 
         const newUser = await Users.add({
             username,
-            password: await bcrypt.hash(passowrd, 14),
-            department
+            password: await bcrypt.hash(password, 14),
+            department,
         })
         
         res.status(201).json(newUser)
